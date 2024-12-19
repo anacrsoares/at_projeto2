@@ -1,51 +1,49 @@
-// components/Gallery.jsx
-import React from "react";
-import {
-  Image,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, FlatList, RefreshControl } from "react-native";
+import GalleryCard from "../components/GalleryCard";
 
-const Gallery = ({ images, onCardPress }) => {
+const Gallery = ({
+  images,
+  onCardPress,
+  onEndReached,
+  onRefresh,
+  refreshing,
+}) => {
   return (
-    <ScrollView contentContainerStyle={styles.gallery}>
-      {images.map((image) => (
-        <TouchableOpacity
-          key={image.id}
-          onPress={() => onCardPress(image)}
-          style={styles.card}
-        >
-          <Image source={{ uri: image.imageUrl }} style={styles.image} />
-          <Text style={styles.title}>{image.title}</Text>
-          <Text style={styles.title}>{image.date_created}</Text>
-        </TouchableOpacity>
-      ))}
-    </ScrollView>
+    <FlatList
+      data={images}
+      keyExtractor={(item, index) => `${item.id}-${index}`}
+      renderItem={({ item }) => (
+        <GalleryCard image={item} onPress={() => onCardPress(item)} />
+      )}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={0.5}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+      contentContainerStyle={styles.container}
+    />
   );
 };
 
+export default Gallery;
+
 const styles = StyleSheet.create({
-  gallery: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-  card: {
-    width: "48%",
-    marginBottom: 10,
-  },
-  image: {
-    width: "100%",
-    height: 150,
-    borderRadius: 8,
+  container: {
+    padding: 10,
+    backgroundColor: "#fff",
   },
   title: {
-    marginTop: 5,
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  progressBar: {
+    marginVertical: 10,
+  },
+  progressText: {
     fontSize: 14,
     textAlign: "center",
+    marginBottom: 10,
   },
 });
-
-export default Gallery;

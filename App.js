@@ -8,26 +8,13 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          orientation: "default",
-        }}
-      >
+      <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
           component={Home}
           name="Home"
-          options={{
-            orientation: "all",
-          }}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen
-          component={ImageDetails}
-          name="ImageDetails"
-          options={{
-            orientation: "all",
-          }}
-        />
+        <Stack.Screen component={ImageDetails} name="ImageDetails" />
       </Stack.Navigator>
     </NavigationContainer>
   );

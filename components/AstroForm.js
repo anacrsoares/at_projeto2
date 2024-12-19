@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { View, TextInput, Button, StyleSheet } from "react-native";
 
-const AstroForm = ({ onSelect }) => {
-  const [astro, setAstro] = useState("earth");
+const AstroForm = ({ onSearch }) => {
+  const [astro, setAstro] = useState(null);
 
   return (
     <View style={styles.container}>
@@ -15,7 +15,7 @@ const AstroForm = ({ onSelect }) => {
       <Button
         title="Search"
         style={styles.button}
-        onPress={() => onSelect(astro)}
+        onPress={() => onSearch(astro)}
       />
     </View>
   );
